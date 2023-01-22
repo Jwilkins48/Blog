@@ -12,9 +12,10 @@ export const useAuthStatus = () => {
       if (user) {
         setLoggedIn(true);
       }
-      setLoading(false);
+      // setLoading(false);
+      console.log();
     });
-  });
+  }, [onAuthStateChanged]);
 
   return { loggedIn, loading };
 };
