@@ -14,7 +14,7 @@ function Profile() {
     email: auth.currentUser?.email,
   });
 
-  const { name, email } = formData;
+  const { name } = formData;
 
   const onLogout = () => {
     auth.signOut();
@@ -47,36 +47,45 @@ function Profile() {
 
   return (
     <div className="profile">
-      <header>
-        <p>My Profile</p>
-        <button onClick={onLogout} type="button" className="logOut">
+      <header className="flex justify-between items-end">
+        <p className="text-3xl ml-2 mt-2">My Profile</p>
+        <button
+          onClick={onLogout}
+          type="button"
+          className="badge badge-secondary p-3 font-bold mr-2 text-lg "
+        >
           Logout
         </button>
       </header>
 
-      <main>
+      <main className="bg-info shadow-xl my-6 mx-2 rounded p-1">
         <div>
-          <p>Personal Details</p>
-          <p
-            className="cursor-pointer"
-            onClick={() => {
-              changeDetails && onSubmit();
-              setChangeDetails(!changeDetails);
-            }}
-          >
-            {changeDetails ? "Done" : "Edit"}
-          </p>
+          <p className="font-bold text-xl text-gray-700">Personal Details</p>
         </div>
 
         <div>
-          <form>
+          <form className="flex mt-2 relative">
             <input
+              className="p-2 rounded shadow mb-1 font-bold "
               value={name}
               disabled={!changeDetails}
               type="text"
               id="name"
               onChange={onChange}
             />
+            <p
+              className="cursor-pointer absolute top-2 text-accent right-40"
+              onClick={() => {
+                changeDetails && onSubmit();
+                setChangeDetails(!changeDetails);
+              }}
+            >
+              {changeDetails ? (
+                "Done"
+              ) : (
+                <i className="fa-regular fa-pen-to-square" />
+              )}
+            </p>
           </form>
         </div>
       </main>
