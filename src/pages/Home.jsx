@@ -19,14 +19,16 @@ function Home() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        //gathering data from posts collections
         const postsRef = collection(db, "posts");
         const q = query(
           postsRef,
-          where("userRef", "==", auth.currentUser.uid),
+          // where("userRef", "==", auth.currentUser.uid),
           orderBy("timestamp", "desc"),
           limit(10)
         );
 
+        //Execute query
         const querySnap = await getDocs(q);
         let posts = [];
         querySnap.forEach((doc) => {
@@ -46,6 +48,7 @@ function Home() {
 
   return (
     <div>
+      {/* Display name if logged in */}
       {auth.currentUser ? (
         <div>
           <div className="flex justify-between mt-3 items-center">
@@ -57,12 +60,29 @@ function Home() {
             </h1>
             <button className="btn mr-2">Add Post</button>
           </div>
-          <div className="divider w-80 mx-auto">
-            <i className="fa-solid fa-ghost" />
-          </div>
         </div>
       ) : (
-        "Welcome! Sign in to make a post"
+        <div className="text-2xl w-72 ml-8 my-3 font-bold">
+          Welcome! Sign in to make a post
+        </div>
+      )}
+      <div className="divider w-80 mx-auto">
+        <i className="fa-solid fa-ghost" />
+      </div>
+
+      {/* Display posts */}
+      {posts && posts.length > 0 ? (
+        <>
+          <main>
+            <div className="card w-80 mx-auto bg-secondary p-3">
+              {posts.map((post) => (
+                <h3 key={post.data.userRef}>{post.data.blogPost}</h3>
+              ))}
+            </div>
+          </main>
+        </>
+      ) : (
+        "No Posts"
       )}
     </div>
   );
