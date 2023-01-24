@@ -12,8 +12,7 @@ export const useAuthStatus = () => {
       if (user) {
         setLoggedIn(true);
       }
-      // setLoading(false);
-      console.log();
+      setLoading(false);
     });
   }, [onAuthStateChanged]);
 

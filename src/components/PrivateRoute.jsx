@@ -4,9 +4,9 @@ import { useAuthStatus } from "../hooks/useAuthStatus";
 const PrivateRoute = () => {
   const { loggedIn, loading } = useAuthStatus();
 
-  // if (loading) {
-  //   return loading icon
-  // }
+  if (loading) {
+    return <h3>Loading...</h3>;
+  }
 
   return loggedIn ? <Outlet /> : <Navigate to="/signIn" />;
 };

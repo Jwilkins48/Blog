@@ -1,10 +1,12 @@
-import React from "react";
-import { getAuth } from "firebase/auth";
+import { useEffect, useState } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
   const auth = getAuth();
   const navigate = useNavigate();
+
+  const [message, setMessage] = useState("");
 
   const onLogout = () => {
     auth.signOut();
@@ -12,19 +14,29 @@ function Navbar() {
     console.log("logged out");
   };
 
+  useEffect(() => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setMessage(auth.currentUser.displayName);
+      } else {
+        setMessage("Daily Blog");
+      }
+    });
+  }, [onAuthStateChanged]);
+
   return (
-    <div className="navbar bg-pink-200 shadow">
+    <div className="navbar bg-neutral shadow">
       <div className="flex-1">
         <a
           onClick={() => navigate("/")}
-          className="btn btn-ghost normal-case text-xl"
+          className="btn btn-ghost normal-case text-xl text-primary"
         >
-          {auth.currentUser
-            ? `${auth.currentUser.displayName}'s Blog`
-            : "Welcome"}
+          {auth.currentUser ? `${message}'s Blog` : <p>{message}</p>}
         </a>
       </div>
       <div className="flex-none gap-2">
+        {/* Logout/profile option for logged in users only */}
         {auth.currentUser ? (
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
@@ -34,10 +46,10 @@ function Navbar() {
             </label>
             <ul
               tabIndex={0}
-              className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+              className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-primary rounded-box w-52"
             >
               <li onClick={() => navigate("/profile")}>
-                <a className="justify-between">Profile</a>
+                <a className="justify-between ">Profile</a>
               </li>
               <li onClick={onLogout}>
                 <a>Logout</a>
@@ -45,11 +57,9 @@ function Navbar() {
             </ul>
           </div>
         ) : (
-          <div
-            onClick={() => navigate("/signIn")}
-            className="mr-6 btn btn-ghost"
-          >
-            <p>Sign In</p>
+          // No signed in user
+          <div onClick={() => navigate("/signIn")} className=" btn btn-ghost">
+            <p className="text-accent">Sign In</p>
           </div>
         )}
       </div>
