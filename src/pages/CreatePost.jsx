@@ -1,15 +1,8 @@
 import { addDoc, serverTimestamp, collection } from "firebase/firestore";
 import React, { useState, useEffect, useRef } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase.config";
-import { v4 as uuidv4 } from "uuid";
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
 
 function CreatePost() {
   const auth = getAuth();
@@ -66,15 +59,39 @@ function CreatePost() {
   }, [isMounted]);
 
   return (
-    <div>
-      <form onSubmit={onSubmit}>
-        <label>Title:</label>
-        <input type="text" value={title} id="title" onChange={onChange} />
+    <div className="flex items-start mt-10 justify-start h-[92vh]">
+      <form
+        className="flex flex-col rounded-xl h-full  shadow w-full mx-4"
+        onSubmit={onSubmit}
+      >
+        <label className="text-3xl my-2 text-secondary font-bold">
+          Blog Title
+        </label>
+        <input
+          className="input text-blue-500 font-bold bg-blue-200 input-bordered input-primary-focus w-full "
+          type="text"
+          value={title}
+          id="title"
+          onChange={onChange}
+          placeholder="Road Trip..."
+        />
 
-        <label>Post:</label>
-        <input type="text" value={blogPost} id="blogPost" onChange={onChange} />
+        <label className="text-2xl my-2 text-primary">Post</label>
+        <textarea
+          className="input text-lg text-primary pt-3 bg-blue-200 input-bordered input-primary-focus h-80 shadow-2xl w-full "
+          type="text"
+          value={blogPost}
+          id="blogPost"
+          onChange={onChange}
+          placeholder="Your Story"
+        />
 
-        <button type="submit">Submit</button>
+        <button
+          className="btn mt-10 shadow-xl bg-secondary text-blue-700"
+          type="submit"
+        >
+          Submit
+        </button>
       </form>
     </div>
   );

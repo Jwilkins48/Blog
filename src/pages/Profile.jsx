@@ -74,7 +74,7 @@ function Profile() {
               onChange={onChange}
             />
             <p
-              className="cursor-pointer absolute top-2 text-accent right-40"
+              className="cursor-pointer absolute top-2 text-accent left-44"
               onClick={() => {
                 changeDetails && onSubmit();
                 setChangeDetails(!changeDetails);

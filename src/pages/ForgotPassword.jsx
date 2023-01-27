@@ -20,26 +20,32 @@ function ForgotPassword() {
   return (
     <div>
       <header>
-        <h1 className="pageHeader">Forgot Password</h1>
+        <h1 className="text-4xl my-3 mx-2">Forgot Password</h1>
       </header>
 
       <main>
         <form onSubmit={onSubmit}>
           <input
+            className="input text-blue-500 font-bold bg-blue-200 input-bordered ml-2 input-primary-focus w-80 "
             type="email"
             placeholder="Email"
             id="email"
             value={email}
             onChange={onChange}
           />
-          <Link to="/sign-in">Sign In</Link>
 
-          <div className="flex">
-            <div className="signInText">Send Reset Link</div>
+          <div className="flex hover:text-primary text-xl">
+            <div className="signInText ml-3 mt-3 cursor-pointer">
+              Send Reset Link{" "}
+            </div>
             <button className="signInButton">
-              <i className="fa-solid fa-arrow-right"></i>
+              <i className=" fa-solid fa-arrow-right mt-4 px-2 "></i>
             </button>
           </div>
+
+          <Link className="ml-3 text-xl hover:text-secondary" to="/sign-in">
+            Sign In
+          </Link>
         </form>
       </main>
     </div>
