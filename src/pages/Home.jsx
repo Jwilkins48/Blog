@@ -1,4 +1,5 @@
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {
@@ -8,24 +9,29 @@ import {
   where,
   orderBy,
   limit,
-  startAfter,
+  doc,
+  deleteDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase.config";
+import { v4 as uuidv4 } from "uuid";
+import Card from "../components/Card";
 
 function Home() {
   const auth = getAuth();
+  const navigate = useNavigate();
   const [posts, setPosts] = useState(null);
+  const [createNewPost, setCreateNewPost] = useState(false);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        const auth = getAuth();
         //gathering data from posts collections
         const postsRef = collection(db, "posts");
         const q = query(
           postsRef,
           // where("userRef", "==", auth.currentUser.uid),
-          orderBy("timestamp", "desc"),
-          limit(10)
+          orderBy("timestamp", "desc")
         );
 
         //Execute query
@@ -38,13 +44,22 @@ function Home() {
           });
         });
         setPosts(posts);
+        console.log(posts);
       } catch (error) {
         console.log("Could not fetch");
       }
     };
-
     fetchPosts();
-  }, []);
+  }, [auth.currentUser?.uid]);
+
+  const onDelete = async (postId) => {
+    if (window.confirm("Are you sure you want to delete?")) {
+      await deleteDoc(doc(db, "posts", postId));
+      const updatedPosts = posts.filter((post) => post.id !== postId);
+      setPosts(updatedPosts);
+      console.log("Successfully deleted listing");
+    }
+  };
 
   return (
     <div>
@@ -52,13 +67,15 @@ function Home() {
       {auth.currentUser ? (
         <div>
           <div className="flex justify-between mt-3 items-center">
-            <h1 className="text-2xl ml-2">
+            <h1 className="text-2xl ml-3">
               Welcome Back{" "}
               <span className="text-primary font-bold">
                 {auth.currentUser.displayName}!
               </span>
             </h1>
-            <button className="btn mr-2">Add Post</button>
+            <Link className="btn mr-3" to="/createPost">
+              Add Post
+            </Link>
           </div>
         </div>
       ) : (
@@ -74,11 +91,14 @@ function Home() {
       {posts && posts.length > 0 ? (
         <>
           <main>
-            <div className="card w-80 mx-auto bg-secondary p-3">
-              {posts.map((post) => (
-                <h3 key={post.data.userRef}>{post.data.blogPost}</h3>
-              ))}
-            </div>
+            {posts.map((post) => (
+              <Card
+                key={post.id}
+                post={post.data}
+                id={post.id}
+                onDelete={() => onDelete(post.id)}
+              />
+            ))}
           </main>
         </>
       ) : (
