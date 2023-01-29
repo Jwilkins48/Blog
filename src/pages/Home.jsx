@@ -79,29 +79,42 @@ function Home() {
       {/* Display name if logged in */}
       {auth.currentUser ? (
         <div>
-          <div className="flex justify-between mt-3 items-center">
-            <h1 className="text-2xl ml-3">
+          <div className="flex justify-between lg:justify-evenly mt-3 items-center">
+            <h1 className="text-2xl lg:text-4xl lg:my-5 lg:ml-12 ml-3">
               Welcome Back{" "}
               <span className="text-primary font-bold">
                 {auth.currentUser.displayName}!
               </span>
             </h1>
-            <Link className="btn mr-3" to="/createPost">
+            <Link className="btn mr-3 lg:mr-12" to="/createPost">
               Add Post
             </Link>
           </div>
+          <div className="divider w-[90%] hidden lg:flex mx-auto">
+            <i className="fa-solid fa-ghost" />
+          </div>
         </div>
       ) : (
-        <div className="h-[vh] flex flex-col justify-start mt-20 text-center">
-          <h1 className="font-bold text-4xl mb-2">
-            Welcome! Sign in to make a post
+        <div className="h-[vh] lg:bg-base-300 lg:shadow-xl flex flex-col lg:flex-row lg:justify-center lg:items-center justify-start mt-20 lg:mt-36 text-center">
+          <h1 className="font-bold heading text-4xl lg:w-[25rem] lg:mt-10 mb-2">
+            Welcome!{" "}
+            <span
+              className="link link-accent"
+              onClick={() => navigate("/signIn")}
+            >
+              Sign in
+            </span>{" "}
+            to make a post
+            <div className="divider w-80 hidden lg:flex text-lg mx-auto mt-6">
+              <i className="fa-solid fa-ghost" />
+            </div>
           </h1>
-          <div className="divider w-80 mx-auto mb-2">
+          <div className="divider w-80 lg:hidden mx-auto mb-2">
             <i className="fa-solid fa-ghost" />
           </div>
 
           <figure>
-            <img src={signInImg} alt="signIn" />
+            <img className="lg:w-[35rem] m-auto" src={signInImg} alt="signIn" />
           </figure>
         </div>
       )}
@@ -109,7 +122,7 @@ function Home() {
       {/* Display posts */}
       {posts && posts.length > 0 ? (
         <>
-          <main>
+          <main className="lg:w-[60rem] lg:mt-10 lg:m-auto ">
             {posts.map((post) => (
               <Card
                 key={post.id}

@@ -13,7 +13,7 @@ import Home from "./pages/Home";
 
 function App() {
   return (
-    <>
+    <div className="relative">
       <BrowserRouter>
         <Navbar />
         <Routes>
@@ -28,9 +28,9 @@ function App() {
           <Route path="/post/:id" element={<SinglePost />} />
           <Route path="/forgotPassword" element={<ForgotPassword />} />
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 

@@ -17,11 +17,11 @@ function Card({ post, id, onDelete, onEdit }) {
       className={
         //Only show current users posts
         post.userRef === auth.currentUser?.uid
-          ? "card w-86 mx-4 h-86 shadow-2xl bg-base-200  p-2 py-4 my-5 mb-8 relative"
+          ? "card w-86  mx-4 h-86 bg-base-200 shadow-lg  p-2 py-4 my-5 mb-8 relative"
           : "hidden"
       }
     >
-      <div className="ml-2 w-80 relative h-full">
+      <div className="ml-2 lg:w-[56rem] w-80 relative h-full">
         <header>
           <h1 className="text-4xl text-secondary font-bold">{post.title}</h1>
         </header>
@@ -29,14 +29,14 @@ function Card({ post, id, onDelete, onEdit }) {
         <div className="divider mt-0"></div>
 
         <div className="flex flex-col">
-          <h3 className="mb-10 ">{post.blogPost}</h3>
+          <h3 className="mb-10 wrap">{post.blogPost}</h3>
           <p className="absolute bottom-0 right-0  text-gray-400 text-xs">{`${date}`}</p>
         </div>
       </div>
 
       {/* Dropdown Start */}
       <div className="dropdown dropdown-end absolute right-5 top-5 text-lg text-orange-200">
-        <label tabIndex={0} className="m-1">
+        <label tabIndex={0} className="m-1 cursor-pointer">
           <i className="fa-solid fa-ellipsis" />
         </label>
         <ul

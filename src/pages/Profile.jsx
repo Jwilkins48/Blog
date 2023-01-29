@@ -58,7 +58,7 @@ function Profile() {
         </button>
       </header>
 
-      <main className="bg-info shadow-xl my-6 mx-2 rounded p-1">
+      <main className="bg-info lg:w-96 shadow-xl my-6 mx-2 rounded p-1">
         <div>
           <p className="font-bold text-xl text-gray-700">Personal Details</p>
         </div>

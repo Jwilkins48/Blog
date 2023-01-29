@@ -53,9 +53,9 @@ function CreatePost() {
   }, [onAuthStateChanged]);
 
   return (
-    <div className=" items-start mt-10 justify-start">
+    <div className="mt-10 lg:mt-20 lg:justify-center lg:flex w-full">
       <form
-        className="flex flex-col rounded-xl h-full w-90 mx-4"
+        className="flex flex-col rounded-xl h-full w-90 lg:w-[50rem] mx-4"
         onSubmit={onSubmit}
       >
         <label className="text-3xl my-2 text-secondary font-bold">
