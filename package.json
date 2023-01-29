@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tailwindcss/line-clamp": "^0.4.2",
     "daisyui": "^2.47.0",
     "firebase": "^9.16.0",
     "react": "^18.2.0",

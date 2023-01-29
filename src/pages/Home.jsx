@@ -1,42 +1,51 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {
   collection,
   getDocs,
   query,
-  where,
   orderBy,
   limit,
   doc,
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase.config";
-import { v4 as uuidv4 } from "uuid";
 import Card from "../components/Card";
+import signInImg from "../assets/resized.png";
+import Footer from "../components/Footer";
 
 function Home() {
   const auth = getAuth();
   const navigate = useNavigate();
   const [posts, setPosts] = useState(null);
-  const [createNewPost, setCreateNewPost] = useState(false);
+  const [message, setMessage] = useState("");
 
+  //Update user sign out
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        setMessage("No user Signed in");
+      } else {
+        setMessage("User signed in");
+      }
+    });
+
+    console.log(message);
+  }, [onAuthStateChanged]);
+
+  //Fetch user posts
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const auth = getAuth();
         //gathering data from posts collections
         const postsRef = collection(db, "posts");
-        const q = query(
-          postsRef,
-          // where("userRef", "==", auth.currentUser.uid),
-          orderBy("timestamp", "desc")
-        );
+        const q = query(postsRef, orderBy("timestamp", "desc"), limit(10));
 
         //Execute query
         const querySnap = await getDocs(q);
         let posts = [];
+        //adding id/data to each post in db
         querySnap.forEach((doc) => {
           return posts.push({
             id: doc.id,
@@ -52,6 +61,7 @@ function Home() {
     fetchPosts();
   }, [auth.currentUser?.uid]);
 
+  //Delete post
   const onDelete = async (postId) => {
     if (window.confirm("Are you sure you want to delete?")) {
       await deleteDoc(doc(db, "posts", postId));
@@ -61,8 +71,11 @@ function Home() {
     }
   };
 
+  //Navigate to edit page
+  const onEdit = (postId) => navigate(`/editPost/${postId}`);
+
   return (
-    <div>
+    <div className="relative">
       {/* Display name if logged in */}
       {auth.currentUser ? (
         <div>
@@ -79,13 +92,19 @@ function Home() {
           </div>
         </div>
       ) : (
-        <div className="text-2xl w-72 ml-8 my-3 font-bold">
-          Welcome! Sign in to make a post
+        <div className="h-[vh] flex flex-col justify-start mt-20 text-center">
+          <h1 className="font-bold text-4xl mb-2">
+            Welcome! Sign in to make a post
+          </h1>
+          <div className="divider w-80 mx-auto mb-2">
+            <i className="fa-solid fa-ghost" />
+          </div>
+
+          <figure>
+            <img src={signInImg} alt="signIn" />
+          </figure>
         </div>
       )}
-      <div className="divider w-80 mx-auto">
-        <i className="fa-solid fa-ghost" />
-      </div>
 
       {/* Display posts */}
       {posts && posts.length > 0 ? (
@@ -97,6 +116,7 @@ function Home() {
                 post={post.data}
                 id={post.id}
                 onDelete={() => onDelete(post.id)}
+                onEdit={() => onEdit(post.id)}
               />
             ))}
           </main>
