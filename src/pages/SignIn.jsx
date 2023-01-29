@@ -1,6 +1,7 @@
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import "animate.css";
 
 function SignIn() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -37,7 +38,7 @@ function SignIn() {
   return (
     <>
       <div className="lg:flex flex-col items-center justify-center lg:h-[80vh]">
-        <div className="lg:bg-base-300 lg:p-12 lg:py-20 lg:shadow-2xl lg:rounded-xl">
+        <div className="lg:bg-base-300 lg:p-12 lg:py-20 lg:shadow-2xl lg:rounded-xl animate__animated animate__fadeInUp">
           <header>
             <h3 className="text-3xl lg:text-5xl my-6 font-bold text-primary">
               Welcome Back!

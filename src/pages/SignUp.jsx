@@ -66,7 +66,7 @@ function SignUp() {
   return (
     <>
       <div className="lg:flex flex-col lg:w-[32rem] lg:m-auto items-center justify-center lg:h-[80vh]">
-        <div className="lg:bg-base-300 w-full lg:p-8 lg:py-16 lg:shadow-2xl lg:rounded-xl">
+        <div className="lg:bg-base-300 w-full lg:p-8 lg:py-16 lg:shadow-2xl lg:rounded-xl animate__animated animate__fadeIn">
           <header>
             <h3 className="text-3xl my-6 ml-4 font-bold text-primary">
               Welcome!

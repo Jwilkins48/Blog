@@ -17,7 +17,7 @@ function Card({ post, id, onDelete, onEdit }) {
       className={
         //Only show current users posts
         post.userRef === auth.currentUser?.uid
-          ? "card w-86  mx-4 h-86 bg-base-200 shadow-lg  p-2 py-4 my-5 mb-8 relative"
+          ? "card w-86  mx-4 h-86 bg-base-200 shadow-lg  p-2 py-4 my-5 mb-8 relative animate__animated animate__fadeIn"
           : "hidden"
       }
     >
