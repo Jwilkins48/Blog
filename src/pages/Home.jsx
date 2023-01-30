@@ -75,22 +75,28 @@ function Home() {
   const onEdit = (postId) => navigate(`/editPost/${postId}`);
 
   return (
-    <div className="relative">
+    <div
+      className={
+        auth.currentUser
+          ? "relative lg:h-auto pb-10 lg:w-fit m-auto lg:bg-base-300 lg:rounded px-5 lg:shadow-xl"
+          : "relative"
+      }
+    >
       {/* Display name if logged in */}
       {auth.currentUser ? (
         <div>
-          <div className="flex justify-between lg:justify-evenly mt-3 items-center">
-            <h1 className="text-2xl lg:text-4xl lg:my-5 lg:ml-12 ml-3">
+          <div className="flex justify-between lg:justify-evenly pt-3 items-center">
+            <h1 className="text-2xl lg:text-4xl lg:my-5 lg:ml-12 ml-2">
               Welcome Back{" "}
               <span className="text-primary font-bold">
                 {auth.currentUser.displayName}!
               </span>
             </h1>
-            <Link className="btn mr-3 lg:mr-12" to="/createPost">
+            <Link className="btn mr-2 lg:mr-12" to="/createPost">
               Add Post
             </Link>
           </div>
-          <div className="divider w-[90%] hidden lg:flex mx-auto">
+          <div className="divider w-[62%] hidden lg:flex mx-auto">
             <i className="fa-solid fa-ghost" />
           </div>
         </div>

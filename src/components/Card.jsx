@@ -1,7 +1,9 @@
 import { getAuth } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 function Card({ post, id, onDelete, onEdit }) {
   const auth = getAuth();
+  const navigate = useNavigate();
   //Format timestamp
   const date = Intl.DateTimeFormat("en-US", {
     year: "numeric",
@@ -21,7 +23,10 @@ function Card({ post, id, onDelete, onEdit }) {
           : "hidden"
       }
     >
-      <div className="ml-2 lg:w-[56rem] w-80 relative h-full">
+      <div
+        onClick={() => navigate(`/post/${id}`)}
+        className="ml-2 lg:w-[56rem] w-auto relative h-full"
+      >
         <header>
           <h1 className="text-4xl text-secondary font-bold">{post.title}</h1>
         </header>

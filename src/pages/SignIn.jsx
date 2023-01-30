@@ -40,7 +40,7 @@ function SignIn() {
       <div className="lg:flex flex-col items-center justify-center lg:h-[80vh]">
         <div className="lg:bg-base-300 lg:p-12 lg:py-20 lg:shadow-2xl lg:rounded-xl animate__animated animate__fadeInUp">
           <header>
-            <h3 className="text-3xl lg:text-5xl my-6 font-bold text-primary">
+            <h3 className="text-3xl lg:text-5xl my-6 ml-3 font-bold text-primary">
               Welcome Back!
             </h3>
           </header>
