@@ -87,7 +87,7 @@ function Home() {
         <div>
           <div className="flex justify-between lg:justify-evenly pt-3 items-center">
             <h1 className="text-2xl lg:text-4xl lg:my-5 lg:ml-12 ml-2">
-              Welcome Back{" "}
+              Welcome Back,{" "}
               <span className="text-primary font-bold">
                 {auth.currentUser.displayName}!
               </span>
